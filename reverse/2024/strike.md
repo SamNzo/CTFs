@@ -37,8 +37,6 @@ def to_hex(char):
     elif char == "f":
         return 15
 
-
-
 def find_flag():
     possible_chars = "0123456789abcdef"
 
