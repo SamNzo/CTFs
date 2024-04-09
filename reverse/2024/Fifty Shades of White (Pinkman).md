@@ -9,10 +9,12 @@ from hashlib import sha256
 import uuid
 import base64
 import subprocess
+import sys
 
 # generate valid serial given a name
 
 flags_found = 0
+cpt = 0
 
 def keygen(name):
     print("[+] Generating license for {}".format(name))
@@ -80,12 +82,15 @@ def get_username():
     print(request_prompt)
 
     if "Well done" in request_prompt:
+        if "Pinkman challenge" in request_prompt:
+            # print second flag
+            request_prompt = process.stdout.readline().strip()
+            print(request_prompt)
+            sys.exit(0)
         request_prompt = process.stdout.readline().strip()
         print(request_prompt)
         request_prompt = process.stdout.readline().strip()
         print(request_prompt)
-        if "FCSC" in request_prompt:
-            flags_found += 1
 
     # Extract the username (assuming it's provided in the prompt)
     username = request_prompt.split(":")[-1].strip()
@@ -105,13 +110,26 @@ if __name__ == '__main__':
     while True:
         username = get_username()
 
-        if flags_found == 2:
-            break
-
         # Process the username
         if username == "Walter White Junior":
             send_license("----BEGIN WHITE LICENSE----\nTmFtZTogV2FsdGVyIFdoaXRlIEp1bmlvcgpTZXJpYWw6IDFkMTE3YzVhLTI5N2QtNGNlNi05MTg2LWQ0Yjg0ZmI3ZjIzMApUeXBlOiAxMzM3Cg==\n-----END WHITE LICENSE-----")
+        elif username == "Jesse Pinkman":
+            send_license("----BEGIN WHITE LICENSE----\nTmFtZTogSmVzc2UgUGlua21hbgpTZXJpYWw6IDZlMmIwMDdkLWRhOTYtNGNkOC1iNjNmLWVjZjg5YmY0MGQ0NApUeXBlOiAxCg==\n-----END WHITE LICENSE-----")
+        elif username == "Saul Goodman":
+            send_license("----BEGIN WHITE LICENSE----\nTmFtZTogU2F1bCBHb29kbWFuClNlcmlhbDogNTIyYzY4YTgtYWVlNS00NGY1LTg3ZDYtMmY2MjI0M2ZmNjE4ClR5cGU6IDEK\n-----END WHITE LICENSE-----")
+        elif username == "Gus Fring":
+            send_license("----BEGIN WHITE LICENSE----\nTmFtZTogR3VzIEZyaW5nClNlcmlhbDogMTZhMzkwMDctNTE2MS00ZjdiLWIzNjMtYjk5Y2ZhOWMwODY0ClR5cGU6IDEK\n-----END WHITE LICENSE-----")
+        elif username == "Hank Schrader":
+            send_license("----BEGIN WHITE LICENSE----\nTmFtZTogSGFuayBTY2hyYWRlcgpTZXJpYWw6IGRkZjQ3YjU2LTk2NGQtNDUyYy1iZmQ4LTc4ZDY2N2FmOTg5MwpUeXBlOiAxCg==\n-----END WHITE LICENSE-----")
+        elif username == "Mike Ehrmantraut":
+            send_license("----BEGIN WHITE LICENSE----\nTmFtZTogTWlrZSBFaHJtYW50cmF1dApTZXJpYWw6IDM2ZTVlZDk1LTkyODQtNDA0NC05YWYzLTFlNDE3NTJjNTZjOQpUeXBlOiAxCg==\n-----END WHITE LICENSE-----")
+        elif username == "Tuco Salamanca":
+            send_license("----BEGIN WHITE LICENSE----\nTmFtZTogVHVjbyBTYWxhbWFuY2EKU2VyaWFsOiA4ZTA1ZTE1MC0zZTcxLTQwNzAtODg0My02MjZhYWIwMGQ4NGUKVHlwZTogMQo=\n-----END WHITE LICENSE-----")
         else:
             license = keygen(username)
             send_license(license)
+
+
+
+
 ```
