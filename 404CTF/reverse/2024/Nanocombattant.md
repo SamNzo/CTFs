@@ -4,6 +4,22 @@
 
 ### Difficile
 
+1. L'input doit faire 19 caractères
+2. Le père copie du code dans les variables "buffer1" et "buffer2"
+3. Il spawn 2 processus fils et se met en attente du 1er
+4. Le 1er processus fait appel à PTRACE_TRACEME et exécute le code de "buffer1" avec l'input en argument
+5. Le 2e processus fait appel à PTRACE_TRACEME et exécute le code de "buffer2" (sans paramètre ? à vérifier)
+6. Quand le code de "buffer1" déclenche un SIGTRAP le père reprend la main
+7. Le père fait les choses suivantes:
+	- Il se met en attente du 2e fils
+	- Quand le code de "buffer2" déclenche un SIGTRAP le père reprend la main
+	- Il récupère les registres du 2e fils, les modifie et lui rend le contrôle
+	- Il rend le contrôle au 1er fils, incrémente "cpt" et se met en attente du 1er
+	- Quand le code de "buffer1" déclenche un SIGTRAP le père reprend la main
+	- Il récupère les registres du 1er fils, les modifie et lui rend le contrôle
+	- Si "cpt" est égal à 19 (si tous les caractères de l'input ont été vérifiés correctement) => c'est gagné
+
+On remarque
 ```py
 import subprocess
 
