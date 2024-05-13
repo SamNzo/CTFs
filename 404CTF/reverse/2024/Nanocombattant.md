@@ -19,7 +19,16 @@
 	- Il récupère les registres du 1er fils, les modifie et lui rend le contrôle
 	- Si "cpt" est égal à 19 (si tous les caractères de l'input ont été vérifiés correctement) => c'est gagné
 
-On remarque
+<p align="center">
+	<img src="https://github.com/SamNzo/CTFs/blob/main/404CTF/reverse/img/nanocombattants_father_child1.drawio.png?raw=true">
+</p>
+Registres correspondants aux variables de father_child1
+
+<p align="center">
+	<img src="https://github.com/SamNzo/CTFs/blob/main/404CTF/reverse/img/nanocombattants_father_child2.drawio.png?raw=true">
+</p>
+Registres correspondants aux variables de father_child2
+
 ```py
 import subprocess
 
