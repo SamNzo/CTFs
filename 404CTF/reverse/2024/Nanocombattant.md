@@ -4,6 +4,8 @@
 
 ### Difficile
 
+Ce chall utilise une technique anti-debug: les nanomites. Ici un processus père communique avec 2 processus fils et controle leur exécution. Si on debugger est utilisé dans un des 2 fils le programme s'arrête.
+
 1. L'input doit faire 19 caractères
 2. Le père copie du code dans les variables "buffer1" et "buffer2"
 3. Il spawn 2 processus fils et se met en attente du 1er
@@ -28,6 +30,20 @@ Registres correspondants aux variables de father_child1
 	<img src="https://github.com/SamNzo/CTFs/blob/main/404CTF/reverse/img/nanocombattants_father_child2.drawio.png?raw=true">
 </p>
 Registres correspondants aux variables de father_child2
+
+
+Fonctions avec renommage des variables après reverse:
+- Fonction qui utilise le 1er fils
+<p align="center">
+	<img src="https://github.com/SamNzo/CTFs/blob/main/404CTF/reverse/img/Capture%20d'%C3%A9cran%202024-05-13%20193319.png?raw=true">
+</p>
+
+- Celle qui concerne le 2e fils
+<p align="center">
+	<img src="https://github.com/SamNzo/CTFs/blob/main/404CTF/reverse/img/Capture%20d'%C3%A9cran%202024-05-13%20193208.png?raw=true">
+</p>
+
+On voit que les charactères sont traités indépendemment. Si le charactère en train d'être vérifié est correct, ``PTRACE_SETREGS`` est appelée 1 fois de plus que s'il est faux dans la fonction concernant le 1er fils. On peut bruteforce le bon input en exécutant le binaire avec ``strace`` et en comptant le nombre de fois que ``PTRACE_SETREGS`` est affiché sur le terminal. Le charactère pour lequel il est affiché le plus est le bon et on passe au suivant.
 
 ```py
 import subprocess
