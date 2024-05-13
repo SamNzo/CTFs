@@ -7,32 +7,31 @@
 Ce chall utilise une technique anti-debug: les nanomites. Ici un processus père communique avec 2 processus fils et controle leur exécution. Si on debugger est utilisé dans un des 2 fils le programme s'arrête.
 
 1. L'input doit faire 19 caractères
-2. Le père copie du code dans les variables "buffer1" et "buffer2"
+2. Le père copie du code dans les variables ``buffer1`` et ``buffer2``
 3. Il spawn 2 processus fils et se met en attente du 1er
-4. Le 1er processus fait appel à PTRACE_TRACEME et exécute le code de "buffer1" avec l'input en argument
-5. Le 2e processus fait appel à PTRACE_TRACEME et exécute le code de "buffer2" (sans paramètre ? à vérifier)
-6. Quand le code de "buffer1" déclenche un SIGTRAP le père reprend la main
+4. Le 1er processus fait appel à ``PTRACE_TRACEME`` et exécute le code de ``buffer1``
+5. Le 2e processus fait appel à ``PTRACE_TRACEME`` et exécute le code de ``buffer2``
+6. Quand le code de ``buffer1`` déclenche un SIGTRAP le père reprend la main
 7. Le père fait les choses suivantes:
 	- Il se met en attente du 2e fils
-	- Quand le code de "buffer2" déclenche un SIGTRAP le père reprend la main
+	- Quand le code de ``buffer2`` déclenche un SIGTRAP le père reprend la main
 	- Il récupère les registres du 2e fils, les modifie et lui rend le contrôle
-	- Il rend le contrôle au 1er fils, incrémente "cpt" et se met en attente du 1er
-	- Quand le code de "buffer1" déclenche un SIGTRAP le père reprend la main
+	- Il rend le contrôle au 1er fils, incrémente ``cpt`` et se met en attente du 1er
+	- Quand le code de "``buffer1`` déclenche un SIGTRAP le père reprend la main
 	- Il récupère les registres du 1er fils, les modifie et lui rend le contrôle
-	- Si "cpt" est égal à 19 (si tous les caractères de l'input ont été vérifiés correctement) => c'est gagné
+	- Si ``cpt`` est égal à 19 (si tous les caractères de l'input ont été vérifiés correctement) => c'est gagné
 
 Pour que les codes des 2 fonctions appelées par le père soient plus lisibles on peut mapper les variables aux registres des fils (voir [ici](https://sansong.gitbook.io/notes/reverse/anti-debugging/nanomites)).
 
-**Registres correspondants aux variables de father_child1:**
+**Registres correspondants aux variables de father_first_child_func:**
 <p align="center">
 	<img src="https://github.com/SamNzo/CTFs/blob/main/404CTF/reverse/img/nanocombattants_father_child1.drawio.png?raw=true" width=500>
 </p>
 
-**Registres correspondants aux variables de father_child2:**
+**Registres correspondants aux variables de father_second_child_func:**
 </p>
 <p align="center">
 	<img src="https://github.com/SamNzo/CTFs/blob/main/404CTF/reverse/img/nanocombattants_father_child2.drawio.png?raw=true" width=500>
-	Registres correspondants aux variables de father_child2
 </p>
 
 **Fonctions avec renommage des variables après reverse:**
