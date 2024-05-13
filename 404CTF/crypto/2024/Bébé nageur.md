@@ -2,7 +2,7 @@
 
 ## Bébé nageur
 
-### Introduction
+### Intro
 
 ```py
 import random as rd
