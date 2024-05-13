@@ -21,18 +21,22 @@ Ce chall utilise une technique anti-debug: les nanomites. Ici un processus père
 	- Il récupère les registres du 1er fils, les modifie et lui rend le contrôle
 	- Si "cpt" est égal à 19 (si tous les caractères de l'input ont été vérifiés correctement) => c'est gagné
 
+Pour que le code des 2 fonctions appelées par le père soient plus lisible on peut mapper les variables aux registres des fils (voir [ici](https://sansong.gitbook.io/notes/reverse/anti-debugging/nanomites))
+
 <p align="center">
 	<img src="https://github.com/SamNzo/CTFs/blob/main/404CTF/reverse/img/nanocombattants_father_child1.drawio.png?raw=true">
+	Registres correspondants aux variables de father_child1
 </p>
-Registres correspondants aux variables de father_child1
+
 
 <p align="center">
 	<img src="https://github.com/SamNzo/CTFs/blob/main/404CTF/reverse/img/nanocombattants_father_child2.drawio.png?raw=true">
+	Registres correspondants aux variables de father_child2
 </p>
-Registres correspondants aux variables de father_child2
 
 
-Fonctions avec renommage des variables après reverse:
+
+**Fonctions avec renommage des variables après reverse:**
 - Fonction qui utilise le 1er fils
 <p align="center">
 	<img src="https://github.com/SamNzo/CTFs/blob/main/404CTF/reverse/img/Capture%20d'%C3%A9cran%202024-05-13%20193319.png?raw=true">
