@@ -48,10 +48,11 @@ v127 = os_WriteFile(
            0);
 ```
 
-Our input is checked multiple times using the function ``main_b``.
+Our input is checked multiple times using the function ``main_b``. However, the writing to the file only happens if ``main_a`` which is called at the end returns ``1``.
 
-Function ``main_a`` contains the code that actually does
+Function ``main_a`` contains the interesting part. Each checksum byte is xored with a value obtained from a string ``FlareOn2024`` (indexes are obtained using arithmetic operations on an hardcoded value).
 ```go
+[...]
 for ( i = 0LL; size > i; ++i )
   {
     buffer_cpy = buffer;
@@ -66,6 +67,33 @@ for ( i = 0LL; size > i; ++i )
     [...]
 }
 ```
+
+The resulting data is then base64 encoded and if the result is equal to another hardcoded value, the function returns 1.
+```
+v21 = encoding_base64__ptr_Encoding_EncodeToString(
+          runtime_bss,
+          buffer,
+          size,
+          size,
+          buffer_cpy,
+          (_DWORD)str,
+          xor_byte,
+          v12,
+          v13,
+          v23,
+          v24,
+          v25);
+  if ( final_buffer == 88 )
+    return runtime_memequal(
+             v21,
+             (__int64)"cQoFRQErX1YAVw1zVQdFUSxfAQNRBXUNAxBSe15QCVRVJ1pQEwd/WFBUAlElCFBFUnlaB1ULByRdBEFdfVtWVA==");
+  else
+    return 0LL;
+```
+
+We can simply build the correct checksum knowing the base64 encoded value:
+- decode b64
+- get each byte by xoring the resulting bytes with those from the string ``FlareOn2024``
 
 ```python
 import base64
@@ -96,5 +124,17 @@ for i in range(0x40):
 
 print("Checksum: ", checksum)
 ```
+
+Providing this checksum writes ``Noice!!!`` on the terminal and writes data in ``REAL_FLAREON_FLAG.JPG``.
+
+> The image file is created in the default root directory to use for user-specific cached data [see go documentation](https://pkg.go.dev/os#UserCacheDir)
+> ```go
+> v227.len = os_UserCacheDir();
+> ```
+> For me it was ``C:\Users\me\AppData\Local``
+
+<p align="center">
+           <img src="https://github.com/SamNzo/CTFs/blob/main/Flare-On/2024/img/REAL_FLAREON_FLAG.JPG?raw=true" width=400>
+</p>
 
 **Th3_M4tH_Do_b3_mAth1ng@flare-on.com**
