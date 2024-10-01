@@ -125,7 +125,11 @@ for i in range(0x40):
 print("Checksum: ", checksum)
 ```
 
-Providing this checksum writes ``Noice!!!`` on the terminal and writes data in ``REAL_FLAREON_FLAG.JPG``.
+Providing this checksum writes ``Noice!!`` on the terminal and writes data in ``REAL_FLAREON_FLAG.JPG``.
+```
+Checksum: 7fd7dd1d0e959f74c133c13abb740b9faa61ab06bd0ecd177645e93b1e3825dd
+Noice!!
+```
 
 > The image file is created in the default root directory to use for user-specific cached data [see go documentation](https://pkg.go.dev/os#UserCacheDir)
 > ```go
