@@ -69,7 +69,7 @@ for ( i = 0LL; size > i; ++i )
 ```
 
 The resulting data is then base64 encoded and if the result is equal to another hardcoded value, the function returns 1.
-```
+```go
 v21 = encoding_base64__ptr_Encoding_EncodeToString(
           runtime_bss,
           buffer,
