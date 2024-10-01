@@ -57,12 +57,12 @@ for ( i = 0LL; size > i; ++i )
   {
     buffer_cpy = buffer;
     v17 = checksum_ptr_cpy;
-    byte = i - 11 * ((__int64)((unsigned __int128)(i * (__int128)0x5D1745D1745D1746LL) >> 64) >> 2);
+    index = i - 11 * ((__int64)((unsigned __int128)(i * (__int128)0x5D1745D1745D1746LL) >> 64) >> 2);
     checksum_byte = checksum_ptr_cpy[i];
-    if ( byte >= 0xB )
+    if ( index >= 0xB )
       runtime_panicIndex(byte, i, 11LL, v17);
     str = "FlareOn2024";
-    xor_byte = (unsigned __int8)aTrueeeppfilepi[byte + 3060];
+    xor_byte = (unsigned __int8)aTrueeeppfilepi[index + 3060];
     *(_BYTE *)(buffer_cpy + i) = xor_byte ^ checksum_byte;
     [...]
 }
