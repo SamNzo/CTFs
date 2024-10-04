@@ -23,7 +23,11 @@ The first condition states that it is 85 characters long. There are different ty
 - arithmetic and logical operations
   - addition, substraction, xor
   - and, mod   
-```
+- filesize conditions
+    - the first one (gives us its size)
+    - xor conditions
+
+As we already know the exact size of the string we don't need to worry about the other conditions regarding the filesize.
 
 The only conditions we need to take care of are the first one that gives us the size of the string and the conditions that clearly help find the exact value of characters. So the ones containing ``==``. For example we don't need conditions saying that the character at index ``58`` is less than ``90`` on the ascci table. We want to know its value directly.
 
