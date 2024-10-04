@@ -33,7 +33,7 @@ The only conditions we need to take care of are the first one that gives us the 
 
 A python script can be used to easily parse the rules and find the characters of the string.
 
-```
+```python
 import hashlib
 import zlib
 
