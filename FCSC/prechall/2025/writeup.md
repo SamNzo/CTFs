@@ -100,5 +100,43 @@ byte verif(int param_1)
 }
 ```
 
+Code pour reverse la fonction et récupérer le bon input.
+```py
+buffer = [0 for i in range(80)]
+flag = [0 for i in range(24)]
+
+hex_value_1 = 0x7f
+i = 0
+while i < 0xc0:
+    for j in range(8):
+        hex_value_2 = hex_value_1 & 0x71
+        for k in range(1, 8):
+            hex_value_2 = (hex_value_2 ^ (hex_value_1 & 0x71) >> (k & 0x1f)) & 0xff
+        buffer[i >> 3] = buffer[i >> 3] ^ ((hex_value_1 & 1) << 0x20 - (0x20 - (j & 0x1f)))
+        hex_value_1 = hex_value_1 >> 1 | (hex_value_2 & 1) << 7
+        i = i + 1
+
+data = [0x39, 0x03, 0xb2, 0xef, 0xf8, 0x0e, 0x71, 0xb4, 0xdb, 0x93, 0xf6, 0x51, 
+        0x3a, 0x62, 0xa6, 0xe8, 0x64, 0x9b, 0x81, 0x04, 0x01, 0x42, 0x74, 0xb5]
+
+index = 24
+for byte in data:
+    buffer[index] = byte
+    index += 1
+
+ret_value = 0
+for i in range(24):
+    xor_result = buffer[i] ^ data[i]
+    buffer[i + 24] = xor_result
+    flag[i] = xor_result
+
+flag[24] = 70
+flag[25] = 67
+flag[26] = 83
+flag[27] = 67
+
+print(''.join(chr(x) for x in flag))
+```
+
 ### Partie 3
 faire un solveur et lister toutes les possibilités puis prendre celle qui optimise le pgcd de chaque ligne
