@@ -138,5 +138,10 @@ flag[27] = 67
 print(''.join(chr(x) for x in flag))
 ```
 
+**Flag 2:**
+```
+FCSC{_BIEN_ESSAYE!_:-)_}
+```
+
 ### Partie 3
 faire un solveur et lister toutes les possibilités puis prendre celle qui optimise le pgcd de chaque ligne
